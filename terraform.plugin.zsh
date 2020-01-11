@@ -8,14 +8,46 @@
 complete -o nospace -C $(asdf which terraform) terraform
 
 alias tf="terraform"
+alias tg="terragrunt"
+alias tfw="terraform workspace"
+
+tfv(){
+  terraform validate -var-file=vars/$(terraform workspace show).tfvars
+}
+
+tfp(){
+  terraform plan -var-file=vars/$(terraform workspace show).tfvars
+}
+
+tfa(){
+  terraform apply -var-file=vars/$(terraform workspace show).tfvars
+}
+
+tfc(){
+  terraform console -var-file=vars/$(terraform workspace show).tfvars
+}
+
+tfd(){
+  terraform destroy -var-file=vars/$(terraform workspace show).tfvars
+}
 
 # from OMZ::plugins/terraform
-function tf_prompt_info() {
+tf_prompt_info() {
+  # dont show 'default' workspace in home dir
+  [[ "$PWD" == ~ ]] && return
+  # check if in terraform dir
+  if [ -d .terraform ]; then
+    workspace=$(terraform workspace show 2> /dev/null) || return
+    echo "[${workspace}]"
+  fi
+}
+
+tg_prompt_info() {
     # dont show 'default' workspace in home dir
     [[ "$PWD" == ~ ]] && return
     # check if in terraform dir
     if [ -d .terraform ]; then
-      workspace=$(terraform workspace show 2> /dev/null) || return
+      workspace=$(terrgrunt workspace show 2> /dev/null) || return
       echo "[${workspace}]"
     fi
 }
