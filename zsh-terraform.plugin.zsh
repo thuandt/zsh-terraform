@@ -21,8 +21,16 @@ Plugins[ZSH_TERRAFORM_DIR]="${0:h}"
 #compdef terraform
 complete -o nospace -C $(asdf which terraform) terraform
 
+# https://github.com/gruntwork-io/terragrunt/issues/689
+#compdef terragrunt
+#complete -o nospace -C $(asdf which terraform) terragrunt
+
+# https://terraspace.cloud/reference/terraspace-completion/
+eval $(terraspace completion_script)
+
 alias tf="terraform"
 alias tg="terragrunt"
+alias tsp="terraspace"
 alias tfw="terraform workspace"
 
 tfv(){
