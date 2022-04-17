@@ -26,7 +26,17 @@ complete -o nospace -C $(asdf which terraform) terraform
 #complete -o nospace -C $(asdf which terraform) terragrunt
 
 # https://terraspace.cloud/reference/terraspace-completion/
-eval $(terraspace completion_script)
+#eval $(terraspace completion_script)
+_terraspace() {
+  COMPREPLY=()
+  local word="${COMP_WORDS[COMP_CWORD]}"
+  local words=("${COMP_WORDS[@]}")
+  unset words[0]
+  local completion=$(terraspace completion ${words[@]})
+  COMPREPLY=( $(compgen -W "$completion" -- "$word") )
+}
+
+complete -F _terraspace terraspace
 
 alias tf="terraform"
 alias tg="terragrunt"
