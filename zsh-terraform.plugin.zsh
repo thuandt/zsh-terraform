@@ -19,11 +19,11 @@ typeset -gA Plugins
 Plugins[ZSH_TERRAFORM_DIR]="${0:h}"
 
 #compdef terraform
-complete -o nospace -C $(asdf which terraform) terraform
+complete -o nospace -C terraform terraform
 
 # https://github.com/gruntwork-io/terragrunt/issues/689
 #compdef terragrunt
-#complete -o nospace -C $(asdf which terraform) terragrunt
+#complete -o nospace -C terraform terragrunt
 
 # https://terraspace.cloud/reference/terraspace-completion/
 #eval $(terraspace completion_script)
